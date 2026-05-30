@@ -1,0 +1,40 @@
+# Cognitive Complexity Score Thresholds
+# Playbook v8.0 (context engineering extension)
+
+cognitive_complexity_score:
+  metrics:
+    - contradiction_density
+    - ambiguity_score
+    - temporal_consistency
+    - cross_agent_conflict
+
+  weights:
+    contradiction_density: 0.35
+    cross_agent_conflict: 0.25
+    ambiguity_score: 0.25
+    temporal_inconsistency: 0.15
+
+  thresholds:
+    autonomous:
+      max: 0.4
+      action: autonomous_execution
+      description: "Normal operation — proceed without intervention"
+
+    elevated:
+      max: 0.6
+      action: verification_amplification
+      description: "Log snapshot, increase verification on next tool call"
+
+    high:
+      max: 0.8
+      action: workflow_partitioning_hitl
+      description: "Partition workflow, invoke human-in-the-loop"
+
+    critical:
+      above: 0.8
+      action: freeze_execution_killswitch
+      description: "Freeze execution, evaluate kill switch"
+
+  ensemble_conflict:
+    variance_threshold: 0.15
+    on_conflict: inject_disagreement_flag_and_route_to_verifier

@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "trident-investigation-agent"
+version = "1.0.0"
+description = "Autonomous Investigation Agent + Trident Context Engineering Engine"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+    {name = "Abhinav Khare", email = "abhinav@ahinsaai.com"},
+]
+keywords = [
+    "investigation", "graph", "anomaly-detection", "fraud",
+    "autonomous-agent", "context-engineering", "fsm", "lineage",
+]
+
+dependencies = [
+    "networkx>=3.0",
+    "rich>=13.0",
+    "pyyaml>=6.0",
+    "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+]
+watch = [
+    "watchdog>=3.0",
+]
+all = [
+    "trident-investigation-agent[dev,watch]",
+]
+
+[project.scripts]
+investigate = "investigation_agent.orchestrator:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+trident_engine = [
+    "config_artifacts/**/*.yaml",
+    "config_artifacts/**/*.json",
+    "fsm/schemas/*.yaml",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

@@ -1,0 +1,42 @@
+# Session-Level Token Budget — Hard caps, sums to 100%
+# Playbook v8.0 Part 32
+
+session_hard_cap: 24600
+
+agents:
+  session_supervisor:
+    model_tier: frontier
+    hard_cap_tokens: 4000
+    percentage: 16.3
+
+  food_coordinator:
+    model_tier: strong
+    hard_cap_tokens: 3000
+    percentage: 12.2
+
+  instamart_coordinator:
+    model_tier: strong
+    hard_cap_tokens: 3000
+    percentage: 12.2
+
+  dineout_coordinator:
+    model_tier: strong
+    hard_cap_tokens: 3000
+    percentage: 12.2
+
+  settlement_agent:
+    model_tier: fast
+    hard_cap_tokens: 2000
+    percentage: 8.1
+
+  verification_orchestrator:
+    model_tier: fast
+    hard_cap_tokens: 2000
+    percentage: 8.1
+
+  reserved_safety_pool:
+    model_tier: null
+    hard_cap_tokens: 7600
+    percentage: 30.9
+
+# Verification: 16.3 + 12.2 + 12.2 + 12.2 + 8.1 + 8.1 + 30.9 = 100.0

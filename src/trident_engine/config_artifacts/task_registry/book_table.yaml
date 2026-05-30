@@ -1,0 +1,40 @@
+# Task: Book Table (Dineout)
+# JIT-injected when intent = book_table
+task: book_table
+version: "1.0"
+domain: dineout
+
+instruction: |
+  The user wants to book a table via Dineout. Follow this workflow:
+
+  1. SEARCH: Use search_venues to find matching restaurants.
+     Apply user preferences: cuisine, ambiance, price range, location.
+     If FOLLOWED_BY_DINING edge exists in graph, suggest linked venue.
+
+  2. DETAILS: Use get_venue_details for the selected venue.
+     Show cuisine, rating, price range, and available time slots.
+
+  3. SLOTS: Use check_availability for the preferred date/time.
+     Offer alternatives if preferred slot is unavailable.
+     State party size and any special requirements.
+
+  4. CONFIRM: Present booking summary: venue, date, time, party size.
+     Wait for explicit confirmation.
+
+  5. EXECUTE: Use book_table only after confirmation.
+
+required_tools:
+  - search_venues
+  - get_venue_details
+  - check_availability
+  - book_table
+
+output_schema:
+  type: object
+  properties:
+    action: { type: string, enum: [search, details, slots, confirm, execute] }
+    venue_id: { type: string }
+    date: { type: string }
+    time: { type: string }
+    party_size: { type: integer }
+    requires_confirmation: { type: boolean }

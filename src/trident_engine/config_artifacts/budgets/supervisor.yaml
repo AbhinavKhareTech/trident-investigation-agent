@@ -1,0 +1,37 @@
+# Session Supervisor Token Budget — Internal allocation
+# Playbook v8.0 Part 32
+
+agent: session_supervisor
+model_tier: frontier
+hard_cap_tokens: 4000
+
+allocation:
+  persona_rules_constraints:
+    pct: 20
+    type: static
+    degrade: never
+
+  retrieved_knowledge:
+    pct: 35
+    type: dynamic
+    degrade: [reduce_k, compress]
+
+  graph_signals:
+    pct: 15
+    type: dynamic
+    degrade: [lossy_top3]
+
+  historical_state:
+    pct: 15
+    type: dynamic
+    degrade: [reduce_window, summarize]
+
+  task_fewshot_schema:
+    pct: 10
+    type: static
+    degrade: [drop_fewshot, simplify_schema]
+
+  entropy_monitoring:
+    pct: 5
+    type: dynamic
+    degrade: null

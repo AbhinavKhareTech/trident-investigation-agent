@@ -1,0 +1,36 @@
+# Task: Restock Grocery (Instamart)
+# JIT-injected when intent = restock_grocery
+task: restock_grocery
+version: "1.0"
+domain: instamart
+
+instruction: |
+  The user wants to restock groceries via Instamart. Follow this workflow:
+
+  1. IDENTIFY: Use graph signals to determine likely restock items.
+     Check reorder_frequency and last_purchase_date for each product.
+     If ensemble confidence > 0.8, pre-populate cart with predicted items.
+
+  2. SEARCH: Use search_products for any additional items the user requests.
+     Apply brand preferences from historical data.
+
+  3. CART: Use update_instamart_cart to build the order.
+     State each item with quantity, unit size, and exact price.
+
+  4. CONFIRM: Present cart summary with exact total.
+     Wait for explicit confirmation.
+
+  5. EXECUTE: Use checkout_instamart only after confirmation.
+
+required_tools:
+  - search_products
+  - update_instamart_cart
+  - checkout_instamart
+
+output_schema:
+  type: object
+  properties:
+    action: { type: string, enum: [identify, search, cart, confirm, execute] }
+    items: { type: array }
+    total_amount: { type: number }
+    requires_confirmation: { type: boolean }

@@ -1,0 +1,64 @@
+# Dineout Booking FSM Schema
+# Simpler lifecycle: no driver assignment or delivery
+# Playbook v8.0 Parts 2, 16
+
+states:
+  - IDLE
+  - ORDER_INITIATED      # Booking request created
+  - PAYMENT_AUTHORIZED   # Pre-auth or deposit charged
+  - MERCHANT_CONFIRMED   # Restaurant confirmed slot
+  - CLOSED               # Booking completed (guest checked in)
+  - REFUND_INITIATED
+  - FAILED
+
+initial_state: IDLE
+
+transitions:
+  IDLE -> ORDER_INITIATED:
+    condition: booking_valid
+    timeout: 60
+    retry: 1
+
+  ORDER_INITIATED -> PAYMENT_AUTHORIZED:
+    condition: payment_processor_success
+    timeout: 300
+    retry: 2
+    compensation: release_reservation_hold
+
+  PAYMENT_AUTHORIZED -> MERCHANT_CONFIRMED:
+    condition: restaurant_slot_confirmed
+    timeout: 300
+    retry: 3
+    compensation: reverse_payment_authorization
+
+  MERCHANT_CONFIRMED -> CLOSED:
+    condition: guest_checked_in_or_timeout
+    timeout: 86400
+    retry: 0
+
+  CLOSED -> REFUND_INITIATED:
+    condition: refund_eligible
+    timeout: 604800
+    retry: 1
+
+  ORDER_INITIATED -> FAILED:
+    condition: always_true
+    timeout: 0
+    retry: 0
+
+  PAYMENT_AUTHORIZED -> FAILED:
+    condition: always_true
+    timeout: 0
+    retry: 0
+    compensation: reverse_payment_authorization
+
+  MERCHANT_CONFIRMED -> FAILED:
+    condition: always_true
+    timeout: 0
+    retry: 0
+    compensation: cancel_restaurant_booking
+
+metadata:
+  domain: dineout
+  version: "1.0"
+  description: "Swiggy Dineout table booking lifecycle"

@@ -1,0 +1,44 @@
+# Task: Cross-Domain Order
+# JIT-injected when intent = multi_domain
+task: cross_domain
+version: "1.0"
+domain: multi
+
+instruction: |
+  The user wants to execute across multiple Swiggy domains in a single session.
+  Example: "Order dinner, restock groceries, and book a table for Saturday."
+
+  1. DECOMPOSE: Split the request into domain-specific sub-tasks.
+     Route each to the appropriate domain coordinator (Food/Instamart/Dineout).
+
+  2. PARALLEL EXECUTE: Run independent sub-tasks in parallel.
+     Only serialize when there is a dependency (e.g., dineout cuisine
+     depends on food order cuisine).
+
+  3. AGGREGATE: Combine results from all domain coordinators.
+     Present unified summary with per-domain breakdown.
+
+  4. CONFIRM: Present combined order summary with total across all domains.
+     Single confirmation gate for the entire multi-domain order.
+     State exact amounts per domain and grand total.
+
+  5. EXECUTE: After confirmation, execute all domain transactions.
+     If any domain fails, report partial success and offer options.
+
+  Cross-domain signals to leverage:
+  - OFTEN_PAIRED edges: food order → likely Instamart items
+  - FOLLOWED_BY_DINING edges: food order → likely Dineout booking
+
+required_tools:
+  - All food tools
+  - All instamart tools
+  - All dineout tools
+
+output_schema:
+  type: object
+  properties:
+    action: { type: string, enum: [decompose, execute, aggregate, confirm, finalize] }
+    sub_tasks: { type: array }
+    total_amount: { type: number }
+    per_domain_amounts: { type: object }
+    requires_confirmation: { type: boolean }

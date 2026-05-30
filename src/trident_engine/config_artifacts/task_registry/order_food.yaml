@@ -1,0 +1,42 @@
+# Task: Order Food
+# JIT-injected into Block 2 when intent = order_food
+# Playbook v8.0 Part 5, Block 2
+
+task: order_food
+version: "1.0"
+domain: food
+
+instruction: |
+  The user wants to order food. Follow this workflow:
+
+  1. SEARCH: Use search_restaurants to find matching restaurants.
+     Apply user preferences from graph signals (cuisine, price range, location).
+     If ensemble confidence > 0.8, pre-select the top recommendation.
+
+  2. MENU: Use get_menu for the selected restaurant.
+     Highlight items matching user's historical orders if graph signals indicate reorder.
+     Check dietary restrictions and allergens.
+
+  3. CART: Use update_food_cart to build the order.
+     State each item with exact price. Compute subtotal.
+
+  4. CONFIRM: Present order summary with exact total amount.
+     Wait for explicit confirmation through the confirmation gate.
+     Do NOT proceed without "yes"/"haan"/"sari".
+
+  5. EXECUTE: Use place_food_order only after confirmation gate returns "confirmed".
+
+required_tools:
+  - search_restaurants
+  - get_menu
+  - update_food_cart
+  - place_food_order
+
+output_schema:
+  type: object
+  properties:
+    action: { type: string, enum: [search, select, cart, confirm, execute] }
+    restaurant_id: { type: string }
+    items: { type: array }
+    total_amount: { type: number }
+    requires_confirmation: { type: boolean }
