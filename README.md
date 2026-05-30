@@ -239,7 +239,7 @@ The core is domain-agnostic. Industry packs are config overlays:
 
 ## Project
 
-Built by [AhinsaAI / Meraki Labs](https://github.com/AbhinavKhareTech).
+Built by [AhinsaAI](https://github.com/AbhinavKhareTech).
 
 Trident Engine from [BGI Trident Consumption Graph](https://github.com/AbhinavKhareTech/trident-consumption-graph).
 
