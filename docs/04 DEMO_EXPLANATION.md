@@ -1,4 +1,4 @@
-# Trident Investigation Agent — What It Is and Where It Goes
+# Trident Investigation Agent- What It Is and Where It Goes
 
 ## Part 1: What You Just Saw
 
