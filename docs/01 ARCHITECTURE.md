@@ -11,14 +11,14 @@ The Trident Investigation Agent is a two-layer system:
 ┌─────────────────────────────────────────────────────────────────────┐
 │                     Investigation Agent                             │
 │                                                                     │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────┐ │
-│  │Synthetic │  │  Graph   │  │ Anomaly  │  │Investi-  │  │Report│ │
-│  │Generator │→ │ Builder  │→ │ Detector │→ │  gator   │→ │  er  │ │
-│  └──────────┘  └──────────┘  └──────────┘  └──────────┘  └──────┘ │
-│                     │              │              │                  │
-│                     ▼              ▼              ▼                  │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────┐   │
+│  │Synthetic │  │  Graph   │  │ Anomaly  │  │Investi-  │  │Report│   │
+│  │Generator │→ │ Builder  │→ │ Detector │→ │  gator   │→ │  er  │   │
+│  └──────────┘  └──────────┘  └──────────┘  └──────────┘  └──────┘   │
+│                     │              │              │                 │
+│                     ▼              ▼              ▼                 │
 │              ┌─────────────────────────────────────────┐            │
-│              │          Orchestrator (Rich UI)          │            │
+│              │          Orchestrator (Rich UI)          │           │
 │              └─────────────────────────────────────────┘            │
 └─────────────────────────────────────────────────────────────────────┘
                               │
@@ -26,23 +26,23 @@ The Trident Investigation Agent is a two-layer system:
 ┌─────────────────────────────────────────────────────────────────────┐
 │                       Trident Engine                                │
 │                                                                     │
-│  ┌──────────────┐  ┌──────────┐  ┌──────────┐  ┌──────────────┐   │
-│  │   Context    │  │   FSM    │  │ Lineage  │  │ Reliability  │   │
-│  │ Engineering  │  │ Engine   │  │ & Audit  │  │   (SRE)      │   │
-│  │              │  │          │  │          │  │              │   │
-│  │ • 3 Planes  │  │ • States │  │ • Graph  │  │ • RAG SRE   │   │
-│  │ • Budgets   │  │ • Rules  │  │ • Log    │  │ • SLOs      │   │
-│  │ • Entropy   │  │ • Compen-│  │ • Handles│  │ • Latency   │   │
-│  │ • Compress  │  │   sation │  │          │  │              │   │
-│  │ • Signals   │  │          │  │          │  │              │   │
-│  │ • Provenance│  │          │  │          │  │              │   │
-│  │ • Assembler │  │          │  │          │  │              │   │
-│  └──────────────┘  └──────────┘  └──────────┘  └──────────────┘   │
+│  ┌──────────────┐  ┌──────────┐  ┌──────────┐  ┌──────────────┐     │
+│  │   Context    │  │   FSM    │  │ Lineage  │  │ Reliability  │     │
+│  │ Engineering  │  │ Engine   │  │ & Audit  │  │   (SRE)      │     │
+│  │              │  │          │  │          │  │              │     │
+│  │ • 3 Planes  │  │ • States │  │ • Graph   │  │ • RAG SRE    │     │
+│  │ • Budgets   │  │ • Rules  │  │ • Log     │  │ • SLOs       │     │
+│  │ • Entropy   │  │ • Compen-│  │ • Handles │  │ • Latency    │     │ 
+│  │ • Compress  │  │   sation │  │           │  │              │     │
+│  │ • Signals   │  │          │  │           │  │              │     │
+│  │ • Provenance│  │          │  │           │  │              │     │
+│  │ • Assembler │  │          │  │           │  │              │     │
+│  └──────────────┘  └──────────┘  └──────────┘  └──────────────┘     │
 │                                                                     │
-│  ┌─────────────────────────────────────────────────────────────┐   │
-│  │                   Config Artifacts (YAML/JSON)               │   │
-│  │  personas/ │ rules/ │ task_registry/ │ budgets/ │ entropy/   │   │
-│  └─────────────────────────────────────────────────────────────┘   │
+│  ┌─────────────────────────────────────────────────────────────┐    │
+│  │                   Config Artifacts (YAML/JSON)              │    │
+│  │  personas/ │ rules/ │ task_registry/ │ budgets/ │ entropy/  │    │
+│  └─────────────────────────────────────────────────────────────┘    │
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
