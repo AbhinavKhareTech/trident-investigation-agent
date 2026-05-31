@@ -1,3 +1,22 @@
+Anaira Insurance Risk OS
+
+Anaira is a multi-tenant Insurance Risk Operating System that sits above existing policy, claims, and customer systems. Rather than replacing core insurance platforms, Anaira orchestrates risk decisions, fraud detection, investigations, governance, and operational workflows across the insurance lifecycle.
+
+Key Business Challenge
+
+Most insurers have:
+
+Multiple disconnected systems
+Manual underwriting reviews
+High claims leakage
+Fraud losses
+Limited visibility across customers, providers, and policies
+Weak auditability
+
+Anaira creates a unified risk layer across all these processes.
+
+
+
 ```mermaid
 flowchart TB
 
